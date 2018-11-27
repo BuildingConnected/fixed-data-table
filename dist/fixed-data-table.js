@@ -2145,7 +2145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._columnToScrollTo = scrollToColumn;
 	    }
 	    this._wheelHandler = new ReactWheelHandler(this._onWheel, this._shouldHandleWheelX, this._shouldHandleWheelY);
-	    this._onScroll = throttle(this._onScroll, this.props.onScrollThrottle || 0);
+	    this._didScroll = throttle(this._didScroll, this.props.onScrollThrottle || 0);
 	  },
 
 	  _shouldHandleWheelX: function _shouldHandleWheelX( /*number*/delta) /*boolean*/{
