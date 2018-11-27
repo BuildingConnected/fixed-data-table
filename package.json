@@ -1,6 +1,6 @@
 {
   "name": "@buildingconnected/fixed-data-table",
-  "version": "0.7.8",
+  "version": "0.7.9",
   "description": "A React table component designed to allow presenting thousands of rows of data.",
   "main": "main.js",
   "peerDependencies": {
@@ -38,6 +38,7 @@
     "build-dist": "./build_helpers/buildDist.sh",
     "build-npm": "./build_helpers/buildNPMInternals.sh",
     "build-docs": "./build_helpers/buildAPIDocs.sh",
+    "build-move": "npm run build-npm && ./build_helpers/buildMove.sh",
     "publish-site": "./build_helpers/publishStaticSite.sh",
     "publish-package": "./build_helpers/publishPackage.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -61,5 +62,8 @@
     "table",
     "data-table",
     "fixed-table"
-  ]
+  ],
+  "dependencies": {
+    "lodash.throttle": "^4.1.1"
+  }
 }
