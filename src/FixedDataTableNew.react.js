@@ -32,6 +32,7 @@ var invariant = require("invariant");
 var joinClasses = require("joinClasses");
 var shallowEqual = require("shallowEqual");
 var translateDOMPositionXY = require("translateDOMPositionXY");
+var throttle = require("lodash.throttle");
 
 var ReactChildren = React.Children;
 
@@ -196,6 +197,17 @@ var FixedDataTable = createReactClass({
     onScrollStart: PropTypes.func,
 
     /**
+     * Callback that is called during scrolling with current horizontal
+     * and vertical scroll values.
+     */
+    onScroll: PropTypes.func,
+
+    /**
+     * Number of milliseconds to throttle the onScroll event
+     */
+    onScrollThrottle: PropTypes.number,
+
+    /**
      * Callback that is called when scrolling ends or stops with new horizontal
      * and vertical scroll values.
      */
@@ -262,7 +274,7 @@ var FixedDataTable = createReactClass({
     /**
      * CSS style props to pass to the horizontal scrollbar
      */
-    horizontalScrollbarStyle: PropTypes.object,
+    horizontalScrollbarStyle: PropTypes.object
   },
 
   getDefaultProps() /*object*/ {
@@ -273,7 +285,7 @@ var FixedDataTable = createReactClass({
       scrollLeft: 0,
       scrollTop: 0,
       topShadowStyle: {},
-      horizontalScrollbarStyle: {},
+      horizontalScrollbarStyle: {}
     };
   },
 
@@ -311,6 +323,10 @@ var FixedDataTable = createReactClass({
       this._onWheel,
       this._shouldHandleWheelX,
       this._shouldHandleWheelY
+    );
+    this._didScroll = throttle(
+      this._didScroll,
+      this.props.onScrollThrottle || 0
     );
   },
 
@@ -403,6 +419,7 @@ var FixedDataTable = createReactClass({
     ) {
       this._didScrollStart();
     }
+    this._didScroll();
     this._didScrollStop();
 
     this.setState(this._calculateState(nextProps, this.state));
@@ -1041,7 +1058,7 @@ var FixedDataTable = createReactClass({
           scrollX: x
         });
       }
-
+      this._didScroll();
       this._didScrollStop();
     }
   },
@@ -1054,6 +1071,7 @@ var FixedDataTable = createReactClass({
       this.setState({
         scrollX: scrollPos
       });
+      this._didScroll();
       this._didScrollStop();
     }
   },
@@ -1070,6 +1088,7 @@ var FixedDataTable = createReactClass({
         scrollY: scrollState.position,
         scrollContentHeight: scrollState.contentHeight
       });
+      this._didScroll();
       this._didScrollStop();
     }
   },
@@ -1079,6 +1098,14 @@ var FixedDataTable = createReactClass({
       this._isScrolling = true;
       if (this.props.onScrollStart) {
         this.props.onScrollStart(this.state.scrollX, this.state.scrollY);
+      }
+    }
+  },
+
+  _didScroll() {
+    if (this._isMounted && this._isScrolling) {
+      if (this.props.onScroll) {
+        this.props.onScroll(this.state.scrollX, this.state.scrollY);
       }
     }
   },
@@ -1110,13 +1137,13 @@ var HorizontalScrollbar = createReactClass({
     var outerContainerStyle = {
       height: Scrollbar.SIZE,
       width: this.props.size,
-      ...this.props.horizontalScrollbarStyle,
+      ...this.props.horizontalScrollbarStyle
     };
     var innerContainerStyle = {
       height: Scrollbar.SIZE,
       position: "absolute",
       overflow: "hidden",
-      width: this.props.size,
+      width: this.props.size
     };
     translateDOMPositionXY(innerContainerStyle, 0, this.props.offset);
 
