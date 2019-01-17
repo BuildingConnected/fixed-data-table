@@ -1,5 +1,5 @@
 /**
- * FixedDataTable v0.7.8 
+ * FixedDataTable v0.7.12 
  *
  * Copyright (c) 2015, Facebook, Inc.
  * All rights reserved.
@@ -7627,6 +7627,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var content;
 	    if (React.isValidElement(props.cell)) {
+	      if (props.cell.type === 'div') {
+	        delete cellProps.columnKey;
+	      }
+
 	      content = React.cloneElement(props.cell, cellProps);
 	    } else if (typeof props.cell === 'function') {
 	      content = props.cell(cellProps);
