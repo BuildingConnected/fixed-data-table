@@ -53,7 +53,7 @@
 }
 
 .fixedDataTableCellLayout/columnResizerContainer:hover {
-  cursor: ew-resize;
+  cursor: col-resize;
 }
 
 .fixedDataTableCellLayout/columnResizerKnob {
