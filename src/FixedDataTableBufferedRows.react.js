@@ -157,6 +157,7 @@ var FixedDataTableBufferedRows = createReactClass({
           onColumnResize={props.onColumnResize}
           isHoveringResizerKnob={props.isHoveringResizerKnob}
           setHoverState={props.setHoverState}
+          isColumnResizing={props.isColumnResizing}
         />;
     }
 

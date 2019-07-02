@@ -226,6 +226,7 @@ class FixedDataTableRow extends React.Component {
       width: this.props.width,
       height: this.props.height,
       zIndex: (this.props.zIndex ? this.props.zIndex : 0),
+      opacity: this.props.isColumnResizing ? .4 : 1,
     };
     translateDOMPositionXY(style, 0, this.props.offsetTop);
 

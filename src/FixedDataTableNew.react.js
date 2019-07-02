@@ -456,6 +456,7 @@ var FixedDataTable = createReactClass({
           scrollableColumns={state.groupHeaderScrollableColumns}
           onColumnResize={this._onColumnResize}
           setHoverState={this.setHoverState}
+          isColumnResizing={state.isColumnResizing}
         />
       );
     }
@@ -574,6 +575,7 @@ var FixedDataTable = createReactClass({
         onColumnResize={this._onColumnResize}
         isHoveringResizerKnob={state.isHoveringResizerKnob}
         setHoverState={this.setHoverState}
+        isColumnResizing={state.isColumnResizing}
       />
     );
 
@@ -668,6 +670,7 @@ var FixedDataTable = createReactClass({
         onColumnResize={this._onColumnResize}
         isHoveringResizerKnob={state.isHoveringResizerKnob}
         setHoverState={this.setHoverState}
+        isColumnResizing={state.isColumnResizing}
       />
     );
   },
