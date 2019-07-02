@@ -56,13 +56,8 @@
   cursor: ew-resize;
 }
 
-.fixedDataTableCellLayout/columnResizerContainer:hover .fixedDataTableCellLayout/columnResizerKnob {
-  visibility: visible;
-}
-
 .fixedDataTableCellLayout/columnResizerKnob {
   position: absolute;
   right: 0px;
-  visibility: hidden;
   width: 4px;
 }

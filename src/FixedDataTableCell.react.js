@@ -121,13 +121,18 @@ var FixedDataTableCell = createReactClass({
     var columnResizerComponent;
     if (props.onColumnResize) {
       var columnResizerStyle = {
-        height
+        height,
+        opacity: props.isHoveringResizerKnob ? 1 : 0,
       };
+      console.log('isHovering: ', props.isHoveringResizerKnob)
+      console.log('isHoveringResizerKnob: ', props.isHoveringResizerKnob)
       columnResizerComponent = (
         <div
           className={cx('fixedDataTableCellLayout/columnResizerContainer')}
           style={columnResizerStyle}
-          onMouseDown={this._onColumnResizerMouseDown}>
+          onMouseDown={this._onColumnResizerMouseDown}
+          onMouseEnter={() => props.setHoverState(true)}
+          onMouseLeave={() => props.setHoverState(false)}>
           <div
             className={joinClasses(
               cx('fixedDataTableCellLayout/columnResizerKnob'),

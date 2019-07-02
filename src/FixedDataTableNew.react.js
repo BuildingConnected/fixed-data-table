@@ -307,7 +307,10 @@ var FixedDataTable = createReactClass({
     }
     this._didScrollStop = debounceCore(this._didScrollStop, 200, this);
 
-    return this._calculateState(this.props);
+    return {
+      ...this._calculateState(this.props),
+      isHoveringResizerKnob: false,
+    };
   },
 
   componentWillMount() {
@@ -452,6 +455,7 @@ var FixedDataTable = createReactClass({
           fixedColumns={state.groupHeaderFixedColumns}
           scrollableColumns={state.groupHeaderScrollableColumns}
           onColumnResize={this._onColumnResize}
+          setHoverState={this.setHoverState}
         />
       );
     }
@@ -568,6 +572,8 @@ var FixedDataTable = createReactClass({
         fixedColumns={state.headFixedColumns}
         scrollableColumns={state.headScrollableColumns}
         onColumnResize={this._onColumnResize}
+        isHoveringResizerKnob={state.isHoveringResizerKnob}
+        setHoverState={this.setHoverState}
       />
     );
 
@@ -659,6 +665,9 @@ var FixedDataTable = createReactClass({
         showLastRowBorder={true}
         width={state.width}
         rowPositionGetter={this._scrollHelper.getRowPosition}
+        onColumnResize={this._onColumnResize}
+        isHoveringResizerKnob={state.isHoveringResizerKnob}
+        setHoverState={this.setHoverState}
       />
     );
   },
@@ -1118,6 +1127,10 @@ var FixedDataTable = createReactClass({
         this.props.onScrollEnd(this.state.scrollX, this.state.scrollY);
       }
     }
+  },
+
+  setHoverState(hoverState) {
+    this.setState({ isHoveringResizerKnob: hoverState })
   }
 });
 
