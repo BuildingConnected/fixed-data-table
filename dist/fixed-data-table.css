@@ -1,5 +1,5 @@
 /**
- * FixedDataTable v0.7.13 
+ * FixedDataTable v0.8.0 
  *
  * Copyright (c) 2015, Facebook, Inc.
  * All rights reserved.
@@ -94,18 +94,13 @@
 }
 
 .fixedDataTableCellLayout_columnResizerContainer:hover {
-  cursor: ew-resize;
-}
-
-.fixedDataTableCellLayout_columnResizerContainer:hover .fixedDataTableCellLayout_columnResizerKnob {
-  visibility: visible;
+  cursor: col-resize;
 }
 
 .fixedDataTableCellLayout_columnResizerKnob {
   position: absolute;
   right: 0px;
-  visibility: hidden;
-  width: 4px;
+  width: 1px;
 }
 /**
  * Copyright (c) 2015, Facebook, Inc.
@@ -119,7 +114,7 @@
  */
 
 .fixedDataTableColumnResizerLineLayout_mouseArea {
-  cursor: ew-resize;
+  cursor: col-resize;
   position: absolute;
   right: -5px;
   width: 12px;
@@ -412,7 +407,7 @@ body[dir="rtl"] .fixedDataTableColumnResizerLineLayout_main {
 }
 
 .public_fixedDataTableCell_columnResizerKnob {
-  background-color: #0284ff;
+  background-color: #f57c00;
 }
 /**
  * Copyright (c) 2015, Facebook, Inc.
@@ -430,7 +425,7 @@ body[dir="rtl"] .fixedDataTableColumnResizerLineLayout_main {
  * Column resizer line.
  */
 .public_fixedDataTableColumnResizerLine_main {
-  border-color: #0284ff;
+  border-color: #f57c00;
 }
 /**
  * Copyright (c) 2015, Facebook, Inc.

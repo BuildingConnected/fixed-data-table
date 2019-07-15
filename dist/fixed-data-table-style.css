@@ -1,5 +1,5 @@
 /**
- * FixedDataTable v0.7.13 
+ * FixedDataTable v0.8.0 
  *
  * Copyright (c) 2015, Facebook, Inc.
  * All rights reserved.
@@ -87,7 +87,7 @@
 }
 
 .public_fixedDataTableCell_columnResizerKnob {
-  background-color: #0284ff;
+  background-color: #f57c00;
 }
 /**
  * Copyright (c) 2015, Facebook, Inc.
@@ -105,7 +105,7 @@
  * Column resizer line.
  */
 .public_fixedDataTableColumnResizerLine_main {
-  border-color: #0284ff;
+  border-color: #f57c00;
 }
 /**
  * Copyright (c) 2015, Facebook, Inc.
