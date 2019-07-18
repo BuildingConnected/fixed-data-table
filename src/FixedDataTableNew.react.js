@@ -617,7 +617,7 @@ var FixedDataTable = createReactClass({
           cx("public/fixedDataTable/main")
         )}
         onWheel={this._wheelHandler.onWheel}
-        style={{ height: state.height, width: state.width }}
+        style={{ height: state.height, width: state.width, opacity: this.state.isColumnResizing ? .4 : 1 }}
       >
         <div
           className={cx("fixedDataTableLayout/rowsContainer")}
