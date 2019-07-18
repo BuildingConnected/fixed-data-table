@@ -124,8 +124,7 @@ var FixedDataTableCell = createReactClass({
         height,
         opacity: props.isHoveringResizerKnob ? 1 : 0,
       };
-      console.log('isHovering: ', props.isHoveringResizerKnob)
-      console.log('isHoveringResizerKnob: ', props.isHoveringResizerKnob)
+
       columnResizerComponent = (
         <div
           className={cx('fixedDataTableCellLayout/columnResizerContainer')}
