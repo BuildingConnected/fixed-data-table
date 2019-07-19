@@ -582,13 +582,27 @@ var FixedDataTable = createReactClass({
     var topShadow;
     var bottomShadow;
     if (state.scrollY) {
+      let topShadowStyle = {}
+      // Kinda hacky, but we'll use the header columns to apply this styling
+      // fix for a renegade border style.
+      if (props.useTopShadow) {
+        const sumOfColumnWidths = [...state.headFixedColumns, ...state.headScrollableColumns].reduce(
+          (acc, column) => acc + column.props.width,
+          0
+        )
+        topShadowStyle = {
+          marginLeft: '3px',
+          width:  sumOfColumnWidths + 'px',
+          maxWidth: 'calc(100% - 6px)',
+        }
+      }
       topShadow = (
         <div
           className={joinClasses(
             cx("fixedDataTableLayout/topShadow"),
             cx("public/fixedDataTable/topShadow")
           )}
-          style={{ ...props.topShadowStyle, top: bodyOffsetTop }}
+          style={{ ...topShadowStyle, top: bodyOffsetTop }}
         />
       );
     }
