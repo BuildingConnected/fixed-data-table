@@ -1,5 +1,5 @@
 /**
- * FixedDataTable v0.8.0 
+ * FixedDataTable v0.8.1 
  *
  * Copyright (c) 2015, Facebook, Inc.
  * All rights reserved.
@@ -1832,6 +1832,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
 	var PropTypes = __webpack_require__(27);
 	/**
 	 * Copyright (c) 2015, Facebook, Inc.
@@ -2354,9 +2356,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var topShadow;
 	    var bottomShadow;
 	    if (state.scrollY) {
+	      var topShadowStyle = {};
+	      // Kinda hacky, but we'll use the header columns to apply this styling
+	      // fix for a renegade border style.
+	      if (props.useTopShadow) {
+	        var sumOfColumnWidths = [].concat(_toConsumableArray(state.headFixedColumns), _toConsumableArray(state.headScrollableColumns)).reduce(function (acc, column) {
+	          return acc + column.props.width;
+	        }, 0);
+	        topShadowStyle = {
+	          marginLeft: '3px',
+	          width: sumOfColumnWidths + 'px',
+	          maxWidth: 'calc(100% - 6px)'
+	        };
+	      }
 	      topShadow = React.createElement("div", {
 	        className: joinClasses(cx("fixedDataTableLayout/topShadow"), cx("public/fixedDataTable/topShadow")),
-	        style: _extends({}, props.topShadowStyle, { top: bodyOffsetTop })
+	        style: _extends({}, topShadowStyle, { top: bodyOffsetTop })
 	      });
 	    }
 
@@ -2372,7 +2387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      {
 	        className: joinClasses(cx("fixedDataTableLayout/main"), cx("public/fixedDataTable/main")),
 	        onWheel: this._wheelHandler.onWheel,
-	        style: { height: state.height, width: state.width }
+	        style: { height: state.height, width: state.width, opacity: this.state.isColumnResizing ? .4 : 1 }
 	      },
 	      React.createElement(
 	        "div",
@@ -6997,8 +7012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var style = {
 	        width: this.props.width,
 	        height: this.props.height,
-	        zIndex: this.props.zIndex ? this.props.zIndex : 0,
-	        opacity: this.props.isColumnResizing ? .4 : 1
+	        zIndex: this.props.zIndex ? this.props.zIndex : 0
 	      };
 	      translateDOMPositionXY(style, 0, this.props.offsetTop);
 
@@ -7651,8 +7665,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        height: height,
 	        opacity: props.isHoveringResizerKnob ? 1 : 0
 	      };
-	      console.log('isHovering: ', props.isHoveringResizerKnob);
-	      console.log('isHoveringResizerKnob: ', props.isHoveringResizerKnob);
+
 	      columnResizerComponent = React.createElement(
 	        'div',
 	        {
