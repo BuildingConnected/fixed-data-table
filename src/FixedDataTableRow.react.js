@@ -110,6 +110,8 @@ class FixedDataTableRowImpl extends React.Component {
         zIndex={2}
         columns={this.props.fixedColumns}
         onColumnResize={this.props.onColumnResize}
+        isHoveringResizerKnob={this.props.isHoveringResizerKnob}
+        setHoverState={this.props.setHoverState}
         rowHeight={this.props.height}
         rowIndex={this.props.index}
       />;

@@ -307,7 +307,10 @@ var FixedDataTable = createReactClass({
     }
     this._didScrollStop = debounceCore(this._didScrollStop, 200, this);
 
-    return this._calculateState(this.props);
+    return {
+      ...this._calculateState(this.props),
+      isHoveringResizerKnob: false,
+    };
   },
 
   componentWillMount() {
@@ -452,6 +455,8 @@ var FixedDataTable = createReactClass({
           fixedColumns={state.groupHeaderFixedColumns}
           scrollableColumns={state.groupHeaderScrollableColumns}
           onColumnResize={this._onColumnResize}
+          setHoverState={this.setHoverState}
+          isColumnResizing={state.isColumnResizing}
         />
       );
     }
@@ -568,19 +573,36 @@ var FixedDataTable = createReactClass({
         fixedColumns={state.headFixedColumns}
         scrollableColumns={state.headScrollableColumns}
         onColumnResize={this._onColumnResize}
+        isHoveringResizerKnob={state.isHoveringResizerKnob}
+        setHoverState={this.setHoverState}
+        isColumnResizing={state.isColumnResizing}
       />
     );
 
     var topShadow;
     var bottomShadow;
     if (state.scrollY) {
+      let topShadowStyle = {}
+      // Kinda hacky, but we'll use the header columns to apply this styling
+      // fix for a renegade border style.
+      if (props.useTopShadow) {
+        const sumOfColumnWidths = [...state.headFixedColumns, ...state.headScrollableColumns].reduce(
+          (acc, column) => acc + column.props.width,
+          0
+        )
+        topShadowStyle = {
+          marginLeft: '3px',
+          width:  sumOfColumnWidths + 'px',
+          maxWidth: 'calc(100% - 6px)',
+        }
+      }
       topShadow = (
         <div
           className={joinClasses(
             cx("fixedDataTableLayout/topShadow"),
             cx("public/fixedDataTable/topShadow")
           )}
-          style={{ ...props.topShadowStyle, top: bodyOffsetTop }}
+          style={{ ...topShadowStyle, top: bodyOffsetTop }}
         />
       );
     }
@@ -609,7 +631,7 @@ var FixedDataTable = createReactClass({
           cx("public/fixedDataTable/main")
         )}
         onWheel={this._wheelHandler.onWheel}
-        style={{ height: state.height, width: state.width }}
+        style={{ height: state.height, width: state.width, opacity: this.state.isColumnResizing ? .4 : 1 }}
       >
         <div
           className={cx("fixedDataTableLayout/rowsContainer")}
@@ -659,6 +681,10 @@ var FixedDataTable = createReactClass({
         showLastRowBorder={true}
         width={state.width}
         rowPositionGetter={this._scrollHelper.getRowPosition}
+        onColumnResize={this._onColumnResize}
+        isHoveringResizerKnob={state.isHoveringResizerKnob}
+        setHoverState={this.setHoverState}
+        isColumnResizing={state.isColumnResizing}
       />
     );
   },
@@ -1118,6 +1144,10 @@ var FixedDataTable = createReactClass({
         this.props.onScrollEnd(this.state.scrollX, this.state.scrollY);
       }
     }
+  },
+
+  setHoverState(hoverState) {
+    this.setState({ isHoveringResizerKnob: hoverState })
   }
 });
 

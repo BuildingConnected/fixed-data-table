@@ -10,7 +10,7 @@
  */
 
 .fixedDataTableColumnResizerLineLayout/mouseArea {
-  cursor: ew-resize;
+  cursor: col-resize;
   position: absolute;
   right: -5px;
   width: 12px;
